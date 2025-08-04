@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import atosLogo from "./atos.png"; // Make sure atos.jpg is in src or public and path is correct
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://docreviewerweb-cwapeqgudpece9gp.uksouth-01.azurewebsites.net";
 
 function App() {
   const [documents, setDocuments] = useState([]);
