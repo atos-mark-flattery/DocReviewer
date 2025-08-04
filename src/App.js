@@ -47,7 +47,7 @@ function App() {
 
   // Show documents
   const fetchDocuments = async () => {
-    const res = await fetch("https://docreviewerweb-cwapeqgudpece9gp.uksouth-01.azurewebsites.net");
+    const res = await fetch(`${API_URL}/documents`);
     const data = await res.json();
     setDocuments(data.documents); // data.documents is an array
   };
