@@ -41,7 +41,7 @@ function App() {
   const [fileInputKey, setFileInputKey] = useState(Date.now());
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [fileClassifications, setFileClassifications] = useState({});
-  const [data, setData] = useState([]);
+  // ...existing code...
 
   const classificationOptions = ["atos", "contract", "other"];
 
