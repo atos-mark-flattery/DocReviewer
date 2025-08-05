@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 import {
   Container,
   Paper,
@@ -41,8 +43,6 @@ function App() {
   const [fileInputKey, setFileInputKey] = useState(Date.now());
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [fileClassifications, setFileClassifications] = useState({});
-  // ...existing code...
-
   const classificationOptions = ["atos", "contract", "other"];
 
   // Show documents
@@ -226,7 +226,12 @@ function App() {
                     }}
                   >
                     {msg.role === "assistant" ? (
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeHighlight]}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
                     ) : (
                       msg.content
                     )}

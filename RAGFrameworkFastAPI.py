@@ -276,12 +276,8 @@ def chat(messages: List[dict]):
     )
     response = completion.choices[0].message.content
 
-    # Remove HTML tags
+    # Remove HTML tags only (for safety)
     response = re.sub(r'<[^>]+>', '', response)
-    # Optionally, remove markdown (e.g., **bold**, *italic*, etc.)
-    response = re.sub(r'[*_`]', '', response)
-    # Remove extra whitespace
-    response = re.sub(r'\s+', ' ', response).strip()
 
     return {"response": response}
 
