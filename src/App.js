@@ -34,7 +34,7 @@ function App() {
   const [chatInput, setChatInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const chatBoxRef = useRef(null);
-  // Auto-scroll chat window when new messages are added...
+  // Auto-scroll chat window when new messages are added....
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
