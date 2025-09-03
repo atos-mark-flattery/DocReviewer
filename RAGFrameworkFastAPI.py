@@ -251,10 +251,10 @@ def chat(messages: List[dict]):
         {
             "role": "system",
             "content": (
-                """You are a lead document reviewer capable of reading contract documents as well as IT related documentation. Your role is to answer questions from the user and refer to the documentation you have to supply the answer.
-                    The user will ask specific questions, but will also ask for comparisions between different classifications of documents. It is important that you keep these documents separate and in their own classification. The answers you give should refer to the classification as well and the reference to the source documents.
-                    If the answer is not in the context, say you don't know. 
-                    Always provide the reference to the source document or section and provide a link if possible."""
+                """
+                You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply: 'I don't know.'
+                Always provide the reference to the source document or section and provide a link if possible. If the user asks for comparisons between classifications, only use the context provided for each classification..
+                """
             ),
         },
         {
