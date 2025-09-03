@@ -253,7 +253,7 @@ def chat(messages: List[dict]):
             "content": (
                 """
                 You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply: 'I don't know.'
-                Always provide the reference to the source document or section and provide a link if possible. If the user asks for comparisons between classifications, only use the context provided for each classification.
+                Always provide the reference to the source document or section and provide a link if possible. If the user asks for comparisons between classifications, only use the context provided for each classification..
                 """
             ),
         },
