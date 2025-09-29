@@ -109,13 +109,14 @@ def extract_txt(file):
     return file.read().decode("utf-8")
 
 def extract_xlsx(file):
-    # Read all sheets into a dict of DataFrames
+    # Ensure file is a BytesIO object for pandas
+    if not hasattr(file, 'read'):
+        file = BytesIO(file)
     xls = pd.ExcelFile(file)
     all_text = []
     for sheet_name in xls.sheet_names:
         df = pd.read_excel(xls, sheet_name=sheet_name)
         rows = df.astype(str).apply(lambda row: ' | '.join(row), axis=1).tolist()
-        # Optionally add the sheet name as a header
         all_text.append(f"--- Sheet: {sheet_name} ---")
         all_text.extend(rows)
     return '\n'.join(all_text)
@@ -243,16 +244,16 @@ def chat(messages: List[dict]):
     user_message = next((m for m in reversed(messages) if m["role"] == "user"), None)
     user_question = user_message["content"] if user_message else ""
     
-    # Retrieve context from vector store
+    # Retrieve context ONLY from stored documents (no web search or external sources)
     context = retrieve_context_from_vector_store(user_question, top_k=5)
-    
-    # Build new messages with context
+
+    # System prompt strictly restricts answers to stored context
     rag_messages = [
         {
             "role": "system",
             "content": (
                 """
-                You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply: 'I don't know.'
+                You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply with: 'I sorry I don't have any context with that detail.'
                 Always provide the reference to the source document or section and provide a link if possible. If the user asks for comparisons between classifications, only use the context provided for each classification..
                 """
             ),
@@ -262,7 +263,7 @@ def chat(messages: List[dict]):
             "content": f"Context:\n{context}\n\nQuestion: {user_question}"
         }
     ]
-    
+
     completion = client.chat.completions.create(
         model=deployment,
         messages=rag_messages,
