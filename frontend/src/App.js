@@ -22,7 +22,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import atosLogo from "./atos.png"; // Make sure atos.jpg is in src or public and path is correct
+import atosLogo from "./atos.png"; // Make sure atos.png is in src or public and path is correct
 
 const API_URL = "https://docreviewerweb-cwapeqgudpece9gp.uksouth-01.azurewebsites.net";
 // const API_URL = "http://localhost:8000";
