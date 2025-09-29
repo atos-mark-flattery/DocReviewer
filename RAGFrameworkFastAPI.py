@@ -109,13 +109,14 @@ def extract_txt(file):
     return file.read().decode("utf-8")
 
 def extract_xlsx(file):
-    # Read all sheets into a dict of DataFrames
+    # Ensure file is a BytesIO object for pandas
+    if not hasattr(file, 'read'):
+        file = BytesIO(file)
     xls = pd.ExcelFile(file)
     all_text = []
     for sheet_name in xls.sheet_names:
         df = pd.read_excel(xls, sheet_name=sheet_name)
         rows = df.astype(str).apply(lambda row: ' | '.join(row), axis=1).tolist()
-        # Optionally add the sheet name as a header
         all_text.append(f"--- Sheet: {sheet_name} ---")
         all_text.extend(rows)
     return '\n'.join(all_text)
@@ -252,7 +253,7 @@ def chat(messages: List[dict]):
             "role": "system",
             "content": (
                 """
-                You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply: 'I don't know.'
+                You are a lead document reviewer. Only answer using the provided document context below. Do NOT use any external sources, web search, or your own general knowledge. If the answer is not found in the context, reply with: 'I sorry I don't have any context with that detail.'
                 Always provide the reference to the source document or section and provide a link if possible. If the user asks for comparisons between classifications, only use the context provided for each classification..
                 """
             ),
