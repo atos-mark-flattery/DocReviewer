@@ -25,6 +25,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://thankful-pebble-0a53e7503.2.azurestaticapps.net"],  #  Add your deployed frontend URL
+    #allow_origins="http://localhost:3000",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
