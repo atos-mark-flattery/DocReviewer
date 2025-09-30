@@ -50,7 +50,7 @@ function App() {
   const fetchDocuments = async () => {
     const res = await fetch(`${API_URL}/documents`);
     const data = await res.json();
-    setDocuments(data.documents); // data.documents is an array
+    setDocuments(data.documents); // data.documents is an array.
     setShowDocuments(true);
   };
 
