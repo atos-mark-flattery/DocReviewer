@@ -46,7 +46,7 @@ function App() {
   const [fileClassifications, setFileClassifications] = useState({});
   const classificationOptions = ["atos", "contract", "other"];
 
-  // Show documents
+  // Show documents...
   const fetchDocuments = async () => {
     const res = await fetch(`${API_URL}/documents`);
     const data = await res.json();
