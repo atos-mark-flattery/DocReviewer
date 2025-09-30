@@ -1,70 +1,80 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DocReviewer
 
-## Available Scripts
+DocReviewer is a full-stack AI-powered document review platform. It allows users to upload, classify, and manage documents (PDF, DOCX, PPTX, XLSX, TXT), and chat with an AI assistant that answers questions using only the uploaded document context. The system uses Azure Blob Storage, Azure Cognitive Search, and OpenAI (Azure) for retrieval-augmented generation (RAG).
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Upload and classify documents (supports PDF, DOCX, PPTX, XLSX, TXT)
+- Store and index documents in Azure Blob Storage and Azure Cognitive Search
+- Chat with an AI assistant that only uses your document context (no web search)
+- Compare and query by document classification
+- Remove documents and manage your document set
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `RAGFrameworkFastAPI.py` — FastAPI backend (document upload, search, chat, Azure integration)
+- `frontend/` — React frontend (user interface, chat, document management)
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Python 3.11+
+- Node.js 16+
+- Azure account with Blob Storage, Cognitive Search, and OpenAI resources
+- (Optional) Azure App Service/Static Web Apps for deployment
 
-### `npm run build`
+## Backend Setup (FastAPI)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Install dependencies:
+	```bash
+	pip install -r requirements.txt
+	```
+2. Set environment variables in a `.env` file:
+	- `CONTRACT_SEARCH_KEY` (Azure Search key)
+	- `CONTRACT_ANALYSIS_APIKYEY` (Azure OpenAI key)
+	- `CONTRACT_DOCINTELL_KEY` (Azure Document Intelligence key)
+3. Start the backend:
+	```bash
+	uvicorn RAGFrameworkFastAPI:app --reload
+	```
+4. The API will be available at `http://localhost:8000`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Frontend Setup (React)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Go to the frontend directory:
+	```bash
+	cd frontend
+	```
+2. Install dependencies:
+	```bash
+	npm install
+	```
+3. Start the frontend:
+	```bash
+	npm start
+	```
+4. The app will be available at `http://localhost:3000`
 
-### `npm run eject`
+## Development Notes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- For local development, set the API URL in `frontend/src/App.js` to `http://localhost:8000`.
+- For production, set the API URL to your deployed backend endpoint.
+- Ensure CORS settings in FastAPI allow your frontend origin.
+- Add `__pycache__/` and `*.pyc` to `.gitignore` to avoid committing Python cache files.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Deployment
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Azure App Service (Backend)
+1. Deploy the FastAPI app using Azure App Service (Python runtime).
+2. Set environment variables in the Azure portal.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Azure Static Web Apps or App Service (Frontend)
+1. Build the frontend:
+	```bash
+	npm run build
+	```
+2. Deploy the `build/` folder to Azure Static Web Apps or App Service.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is for internal/prototype use. Add your license here if open-sourcing.
