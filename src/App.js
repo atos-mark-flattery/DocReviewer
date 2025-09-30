@@ -30,6 +30,7 @@ const API_URL = "https://docreviewerweb-cwapeqgudpece9gp.uksouth-01.azurewebsite
 
 function App() {
   const [documents, setDocuments] = useState([]);
+  const [showDocuments, setShowDocuments] = useState(true);
   const [selectedDocs, setSelectedDocs] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
@@ -50,6 +51,7 @@ function App() {
     const res = await fetch(`${API_URL}/documents`);
     const data = await res.json();
     setDocuments(data.documents); // data.documents is an array
+    setShowDocuments(true);
   };
 
   // Upload documents
@@ -283,6 +285,14 @@ function App() {
                 Show Documents
               </Button>
               <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => setShowDocuments(false)}
+                disabled={!showDocuments}
+              >
+                Hide Documents
+              </Button>
+              <Button
                 variant="outlined"
                 color="error"
                 onClick={handleDelete}
@@ -291,27 +301,29 @@ function App() {
                 Remove Selected
               </Button>
             </Stack>
-            <List>
-              {(documents ?? []).map((doc, idx) => (
-                <ListItem key={idx} dense>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={selectedDocs.includes(doc.Document)}
-                      onChange={() => handleSelectDoc(doc.Document)}
+            {showDocuments && (
+              <List>
+                {(documents ?? []).map((doc, idx) => (
+                  <ListItem key={idx} dense>
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={selectedDocs.includes(doc.Document)}
+                        onChange={() => handleSelectDoc(doc.Document)}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={doc.Document}
+                      secondary={
+                        <span style={{ color: "green", fontWeight: "bold" }}>
+                          {doc.Classification}
+                        </span>
+                      }
                     />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={doc.Document}
-                    secondary={
-                      <span style={{ color: "green", fontWeight: "bold" }}>
-                        {doc.Classification}
-                      </span>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
+                  </ListItem>
+                ))}
+              </List>
+            )}
             <Divider sx={{ my: 3 }} />
             <Typography variant="subtitle1" gutterBottom>
               Upload Documents
