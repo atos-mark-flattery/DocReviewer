@@ -32,7 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Azure setup (same as before)
+# Azure setup (same as before).
 blob_connection_string = "DefaultEndpointsProtocol=https;AccountName=contracts;AccountKey=0KBsuwH1J8/ei4/su4gmh0kOTVqXfrCGhgD6C/cpM3WpuvXEK8Botw6OItcmy5cZ0048ATewyzPK+ASt64xYvg==;EndpointSuffix=core.windows.net"
 container_name = "data"
 blob_service_client = BlobServiceClient.from_connection_string(blob_connection_string)
