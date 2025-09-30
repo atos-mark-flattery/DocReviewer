@@ -54,7 +54,7 @@ function App() {
     setShowDocuments(true);
   };
 
-  // Upload documents
+  // Upload documents.
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles(files);
