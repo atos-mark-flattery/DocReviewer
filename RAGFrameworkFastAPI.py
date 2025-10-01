@@ -123,6 +123,13 @@ def extract_xlsx(file):
         all_text.extend(rows)
     return '\n'.join(all_text)
 
+# New: Extract CSV
+def extract_csv(file_bytes):
+    # file_bytes is bytes, so wrap in BytesIO
+    df = pd.read_csv(BytesIO(file_bytes))
+    rows = df.astype(str).apply(lambda row: ' | '.join(row), axis=1).tolist()
+    return '\n'.join(rows)
+
 def extract_pdf(file):
     reader = PyPDF2.PdfReader(file)
     text = ""
@@ -216,10 +223,12 @@ async def upload_documents(files: List[UploadFile] = File(...), categories: List
         file_bytes = await uploaded_file.read()
         if ext == "xlsx":
             text = extract_xlsx(file_bytes)
+        elif ext == "csv":
+            text = extract_csv(file_bytes)
         elif ext == "pptx":
             text = extract_pptx(file_bytes)
         elif ext == "docx":
-            text = extract_docx(file_bytes)  # <-- Add this branch
+            text = extract_docx(file_bytes)
         else:
             blob_name = f"{category}/{uploaded_file.filename}"
             blob_client = container_client.get_blob_client(blob_name)
