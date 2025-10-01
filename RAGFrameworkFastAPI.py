@@ -222,7 +222,10 @@ async def upload_documents(files: List[UploadFile] = File(...), categories: List
         ext = uploaded_file.filename.split('.')[-1].lower()
         file_bytes = await uploaded_file.read()
         if ext == "xlsx":
-            text = extract_xlsx(file_bytes)
+            try:
+                text = extract_xlsx(file_bytes)
+            except Exception as e:
+                return JSONResponse(status_code=400, content={"error": f"Failed to process XLSX: {str(e)}"})
         elif ext == "csv":
             text = extract_csv(file_bytes)
         elif ext == "pptx":
