@@ -17,6 +17,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+# Prevent .env from being committed
+.env
 
 # Prevent Coveralls config from being committed
 .coveralls.yml
